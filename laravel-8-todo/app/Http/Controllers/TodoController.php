@@ -10,7 +10,7 @@ class TodoController extends Controller
 
     public function index()
     {
-        $todos = Todo::paginate(3);
+        $todos = Todo::latest()->paginate(3);
         return view('todos.index', compact('todos'));
     }
 
