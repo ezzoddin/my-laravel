@@ -5,9 +5,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h4>تسک ها</h4>
-                <div class="card">
 
+              <div class="d-flex justify-content-between  align-items-center my-3">
+                  <h4>تسک ها</h4>
+                  <a class="btn btn-sm btn-outline-dark" href="{{ route('todos.create') }}">ایجاد تسک جدید</a>
+              </div>
+
+                <div class="card">
                     <div class="card-header">
                         تسک ها
                     </div>
