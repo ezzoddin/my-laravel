@@ -79,4 +79,16 @@ class TodoController extends Controller
         return redirect()->route('todos.index');
 
     }
+
+    public function complete(Todo $todo)
+    {
+        $todo->update([
+            'completed' => 1
+        ]);
+
+        alert()->success('تسک مورد نظر به وضعیت انجام شد تغییر پیدا کرد.', 'ّبا تشکر');
+        return redirect()->route('todos.index');
+
+    }
+
 }
