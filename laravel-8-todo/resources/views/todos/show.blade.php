@@ -18,10 +18,20 @@
 
                     <hr>
 
-                    <div class="me-3 mb-3">
+                    <div class="d-flex me-3 mb-3">
                         <a class="btn btn-sm btn-outline-dark" href="{{route('todos.edit', ['todo' => $todo->id])}}">
                             ویرایش
                         </a>
+
+
+                        <form class="me-2" action="{{ route('todos.delete', ['todo'=> $todo->id]) }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-sm btn-danger">
+                                حذف
+                            </button>
+                        </form>
+
                     </div>
 
 
