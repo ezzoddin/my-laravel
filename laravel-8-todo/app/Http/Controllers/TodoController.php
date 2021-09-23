@@ -86,7 +86,7 @@ class TodoController extends Controller
             'completed' => 1
         ]);
 
-        alert()->success('تسک مورد نظر به وضعیت انجام شد تغییر پیدا کرد.', 'ّبا تشکر');
+        alert()->success('تسک مورد نظر به وضعیت انجام شد تغییر پیدا کرد.','با تشکر');
         return redirect()->route('todos.index');
 
     }
