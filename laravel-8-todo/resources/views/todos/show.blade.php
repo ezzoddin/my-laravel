@@ -16,6 +16,15 @@
                         {{ $todo->description }}
                     </div>
 
+                    <hr>
+
+                    <div class="me-3 mb-3">
+                        <a class="btn btn-sm btn-outline-dark" href="{{route('todos.edit', ['todo' => $todo->id])}}">
+                            ویرایش
+                        </a>
+                    </div>
+
+
                 </div>
 
 
