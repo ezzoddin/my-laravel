@@ -17,7 +17,32 @@ class TodoController extends Controller
 
     public function show(Todo $todo)
     {
+
         return view('todos.show', compact('todo'));
+    }
+
+    public function create()
+    {
+
+        return view('todos.create');
+    }
+
+
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        Todo::create([
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
+
+        return redirect()->route('todos.index');
+
     }
 
 }
