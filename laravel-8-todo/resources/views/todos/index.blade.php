@@ -15,13 +15,16 @@
                     <div class="card-body">
                         <ul class="list-group">
                             @foreach($todos as $todo)
-                                <li class="list-group-item">
+                                <li class="list-group-item d-flex justify-content-between">
                                     {{ $todo->title }}
+                                    <a class="btn btn-sm btn-dark"
+                                       href="{{ route('todos.show', ['todo' => $todo->id]) }}">نمایش</a>
                                 </li>
                             @endforeach
 
                         </ul>
                     </div>
+
 
                 </div>
 
