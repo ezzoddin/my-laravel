@@ -72,4 +72,11 @@ class TodoController extends Controller
 
     }
 
+    public function destroy(Todo $todo)
+    {
+        $todo->delete();
+        alert()->error('تسک با موفقیت حذف شد.', 'دقت کنید');
+        return redirect()->route('todos.index');
+
+    }
 }
