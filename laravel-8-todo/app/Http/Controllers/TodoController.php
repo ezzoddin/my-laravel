@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class TodoController extends Controller
 {
@@ -41,6 +42,7 @@ class TodoController extends Controller
             'description' => $request->description
         ]);
 
+        alert()->success('تسک با موفقیت انجام شد.', 'با تشکر');
         return redirect()->route('todos.index');
 
     }
