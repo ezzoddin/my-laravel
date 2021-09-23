@@ -47,4 +47,29 @@ class TodoController extends Controller
 
     }
 
+    public function edit(Todo $todo)
+    {
+        return view('todos.edit', compact('todo'));
+
+    }
+
+
+    public function update(Request $request, Todo $todo)
+    {
+
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        Todo::updated([
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
+
+        alert()->success('تسک با موفقیت ویرایش شد.', 'با تشکر');
+        return redirect()->route('todos.index');
+
+    }
+
 }
