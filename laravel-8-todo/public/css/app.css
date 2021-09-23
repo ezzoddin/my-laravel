@@ -11269,3 +11269,13 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+@font-face {
+  font-family: "Vazir";
+  src: url(/fonts/Vazir.eot?04fa21193336c3e1fa9870b7bd2face5);
+  /* IE9 Compat Modes */
+  src: url(/fonts/Vazir.eot?04fa21193336c3e1fa9870b7bd2face5?#iefix) format("embedded-opentype"), url(/fonts/Vazir.woff2?0236d12799f12ebefd2d1451b6ba69f2) format("woff2"), url(/fonts/Vazir.woff?a30b9598c58099f1584cd2e1d074004b) format("woff2"), url(/fonts/Vazir.ttf?8698ab7164cb8aa9f35b0df0e3a335df) format("trueetype");
+}
+body {
+  direction: rtl;
+  text-align: right !important;
+}
