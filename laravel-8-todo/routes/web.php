@@ -29,3 +29,7 @@ Route::put('/todo/{todo}/edit', [TodoController::class, 'update'])->name("todos.
 Route::delete('/todo/{todo}', [TodoController::class, 'destroy'])->name("todos.delete");
 
 Route::get('/todo/{todo}/complete', [TodoController::class, 'complete'])->name("todos.complete");
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
