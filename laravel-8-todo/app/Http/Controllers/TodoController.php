@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todo;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
+use Morilog\Jalali\Jalalian;
+
+use SweetAlert;
 
 class TodoController extends Controller
 {
@@ -20,7 +23,7 @@ class TodoController extends Controller
     public function index()
     {
 
-        $todos = auth()->user()->todos()->paginate(3);
+        $todos = auth()->user()->todos()->latest()->paginate(3);
 
         return view('todos.index', compact('todos'));
     }
@@ -46,6 +49,9 @@ class TodoController extends Controller
             'description' => 'required'
         ]);
 
+        $todo = new Todo;
+
+
         Todo::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -68,6 +74,7 @@ class TodoController extends Controller
 
     public function update(Request $request, Todo $todo)
     {
+
         Gate::authorize('update', $todo);
 
 
@@ -77,7 +84,7 @@ class TodoController extends Controller
         ]);
 
 
-        Todo::updated([
+        $todo->update([
             'title' => $request->title,
             'description' => $request->description
         ]);
@@ -105,7 +112,7 @@ class TodoController extends Controller
             'completed' => 1
         ]);
 
-        alert()->success('تسک مورد نظر به وضعیت انجام شد تغییر پیدا کرد.', 'با تشکر');
+         alert()->success('تسک مورد نظر به وضعیت انجام شد تغییر پیدا کرد.', 'با تشکر');
         return redirect()->route('todos.index');
 
     }
