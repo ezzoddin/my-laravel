@@ -8,9 +8,26 @@
                 <h4 class="text-center mt-5 mb-3 text-break">{{ $todo->title }}</h4>
                 <div class="card">
 
-                    <div class="card-header">
+
+                    <div class="d-flex justify-content-between  align-items-center card-header">
                         توضیحات
+
+
+                        <span class="badge bg-dark">
+                            {{
+                                jdate( $todo->created_at )->format('Y-m-d')
+                            }}
+                        </span>
+
+
+                        <span class="badge bg-dark">
+                            {{
+                               $todo->updated_at->diffForHumans()
+                            }}
+                        </span>
+
                     </div>
+
 
                     <div class="card-body">
                         {{ $todo->description }}
