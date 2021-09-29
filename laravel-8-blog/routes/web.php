@@ -14,3 +14,6 @@ Route::get('/register', function () {
     return view('register');
 })->name('register');
 
+Route::get('/reset-password', function () {
+    return view('reset-password');
+})->name('reset-pass');
