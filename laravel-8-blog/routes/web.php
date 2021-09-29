@@ -17,3 +17,8 @@ Route::get('/register', function () {
 Route::get('/reset-password', function () {
     return view('reset-password');
 })->name('reset-pass');
+
+
+Route::get('/post/{id}', function ($id) {
+    return view('post');
+})->name('post.show');
