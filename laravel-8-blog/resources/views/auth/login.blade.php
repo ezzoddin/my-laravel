@@ -9,19 +9,36 @@
 
                 <form class="sign-page__form" action="{{ route('login.store') }}" method="POST">
                     @csrf
-                    <input name="login" type="text" class="text text--left" placeholder="شماره یا ایمیل">
-                    <input name="password" type="password" class="text text--left" placeholder="رمز عبور">
+                    <input type="text" name="email" class="text text--left" placeholder="شماره یا ایمیل">
+                    @error('email')
+                    <p style="margin-bottom: 1rem;
+                            color: #D8000C;
+                            text-align: right;"
+                    >
+                        {{ $message }}
+                    </p>
+                    @enderror
+
+                    <input type="password" name="password" class="text text--left" placeholder="رمز عبور">
+                    @error('password')
+                    <p style="margin-bottom: 1rem;
+                            color: #D8000C;
+                            text-align: right;"
+                    >
+                        {{ $message }}
+                    </p>
+                    @enderror
+
                     <label class="checkbox text--right">
-                        <input name="remember" type="checkbox" class="checkbox__filter">
+                        <input type="checkbox" name="remember" class="checkbox__filter">
                         <span class="checkbox__mark position-relative"></span>
                         مرا بخاطر بسپار
                     </label>
                     <a class="recover-password" href="{{ route('password.request') }}">بازیابی رمز عبور</a>
-                    <button class="btn btn--blue btn--shadow-blue width-100 ">ورود به سایت</button>
+                    <button class="btn btn--blue btn--shadow-blue width-100" type="submit">ورود به سایت</button>
                     <div class="sign-page__footer">
                         <span>کاربر جدید هستید؟</span>
                         <a href="{{ route('register') }}" class="color--46b2f0">صفحه ثبت نام</a>
-
                     </div>
                 </form>
             </div>
