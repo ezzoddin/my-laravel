@@ -9,6 +9,6 @@ class PanelLayout extends Component
 
     public function render()
     {
-        return view('components.panel-layout');
+        return view('layouts.panel');
     }
 }
