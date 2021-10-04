@@ -1,12 +1,12 @@
 <x-panel-layout>
-    <x-slot name="title">
-        - مدیریت کاربران
-    </x-slot>
+  <x-slot name="title">
+    - مدیریت کاربران
+  </x-slot>
     <div class="breadcrumb">
-        <ul>
-            <li><a href="{{ route('dashboard') }}">پیشخوان</a></li>
-            <li><a href="{{ route('users.index') }}" class="is-active">کاربران</a></li>
-        </ul>
+      <ul>
+          <li><a href="{{ route('dashboard') }}" >پیشخوان</a></li>
+          <li><a href="{{ route('users.index') }}" class="is-active">کاربران</a></li>
+      </ul>
     </div>
     <div class="main-content font-size-13">
         <div class="tab__box">
