@@ -1,12 +1,12 @@
 <x-panel-layout>
-  <x-slot name="title">
-    - مدیریت کاربران
-  </x-slot>
+    <x-slot name="title">
+        - مدیریت کاربران
+    </x-slot>
     <div class="breadcrumb">
-      <ul>
-          <li><a href="{{ route('dashboard') }}" >پیشخوان</a></li>
-          <li><a href="{{ route('users.index') }}" class="is-active">کاربران</a></li>
-      </ul>
+        <ul>
+            <li><a href="{{ route('dashboard') }}">پیشخوان</a></li>
+            <li><a href="{{ route('users.index') }}" class="is-active">کاربران</a></li>
+        </ul>
     </div>
     <div class="main-content font-size-13">
         <div class="tab__box">
@@ -24,6 +24,7 @@
                     <th>شناسه</th>
                     <th>نام و نام خانوادگی</th>
                     <th>ایمیل</th>
+                    <th>موبایل</th>
                     <th>سطح کاربری</th>
                     <th>تاریخ عضویت</th>
                     <th>وضعیت حساب</th>
@@ -31,20 +32,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr role="row" class="">
-                    <td><a href="">1</a></td>
-                    <td><a href="">محمد نیکو</a></td>
-                    <td>programming@gmail.com</td>
-                    <td>کاربر عادی</td>
-                    <td>1399/11/11</td>
-                    <td class="text-success">تاییده شده</td>
-                    <td>
-                        <a href="" class="item-delete mlg-15" title="حذف"></a>
-                        <a href="" class="item-confirm mlg-15" title="تایید"></a>
-                        <a href="" class="item-reject mlg-15" title="رد"></a>
-                        <a href="{{ route('users.edit', 1) }}" class="item-edit " title="ویرایش"></a>
-                    </td>
-                </tr>
+                @foreach($users as $user)
+
+                    <tr role="row" class="">
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->mobile }}</td>
+                        <td>{{ $user->getRoleInFarsi() }}</td>
+                        <td>{{ $user->getCreatedAtInJalali() }}</td>
+                        <td class="text-success">تاییده شده</td>
+                        <td>
+                            <a href="" class="item-delete mlg-15" title="حذف"></a>
+                            <a href="{{ route('users.edit', $user->id) }}" class="item-edit " title="ویرایش"></a>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
