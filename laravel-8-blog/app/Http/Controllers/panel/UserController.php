@@ -63,12 +63,14 @@ class UserController extends Controller
         $user->update(
             $request->only(['name', 'email', 'mobile', 'role'])
         );
+
         return redirect()->route('users.index');
 
     }
 
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return back();
     }
 }
