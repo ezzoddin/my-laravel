@@ -43,9 +43,10 @@ class UserController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
-        return view('panel.users.edit');
+        // route model binding
+        return view('panel.users.edit', compact('user'));
     }
 
     public function update(Request $request, $id)
