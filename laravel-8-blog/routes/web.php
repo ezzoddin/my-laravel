@@ -19,7 +19,7 @@ Route::get('/profile', function () {
     return 'profile';
 })->name('profile');
 
-Route::get('/panel/users', [UserController::class, 'index'])->name('profile');
+Route::resource('/panel/users', UserController::class);
 
 require __DIR__ . '/auth.php';
 
