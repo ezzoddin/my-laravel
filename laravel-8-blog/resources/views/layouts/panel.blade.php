@@ -19,18 +19,11 @@
             <div class="v-dialog__container" style="display: block;"></div>
             <div class="box__camera default__avatar"></div>
         </div>
-        <span class="profile__name"> کاربر: {{ auth()->user()->name }}</span>
-        <span class="profile__name"> نقش: {{ auth()->user()->getRoleInFarsi() }}</span>
+        <span class="profile__name">کاربر : {{ auth()->user()->name }}</span>
+        <span class="profile__name">نقش : {{ auth()->user()->getRoleInFarsi() }}</span>
     </div>
 
-    <ul>
-        <li class="item-li i-dashboard is-active"><a href="index.html">پیشخوان</a></li>
-        <li class="item-li i-users"><a href="users.html"> کاربران</a></li>
-        <li class="item-li i-categories"><a href="categories.html">دسته بندی ها</a></li>
-        <li class="item-li i-articles"><a href="articles.html">مقالات</a></li>
-        <li class="item-li i-comments"><a href="comments.html"> نظرات</a></li>
-        <li class="item-li i-user__inforamtion"><a href="user-information.html">اطلاعات کاربری</a></li>
-    </ul>
+    @include('_partials.panel-sidebar')
 
 </div>
 <div class="content">

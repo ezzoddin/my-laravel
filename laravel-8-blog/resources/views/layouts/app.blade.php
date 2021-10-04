@@ -49,7 +49,7 @@
                         <div class="dropdown-select wide" id="dropdown-user" onclick="toggleUserDropdown()"
                              tabindex="0">
                         <span class="current">
-                            {{ auth()->user()->name }}
+                        {{ auth()->user()->name }}
                         </span>
                             <div class="list">
                                 <ul>
