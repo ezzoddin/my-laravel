@@ -42,7 +42,9 @@
     </div>
     {{ $slot }}
 </div>
-</body>
 <script src="{{ asset('blog/panel/js/jquery-3.4.1.min.js') }}"></script>
 <script src="{{ asset('blog/panel/js/js.js') }}"></script>
+{{ $scripts  ?? ''}}
+
+</body>
 </html>

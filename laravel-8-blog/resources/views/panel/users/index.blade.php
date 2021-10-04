@@ -27,13 +27,11 @@
                     <th>موبایل</th>
                     <th>سطح کاربری</th>
                     <th>تاریخ عضویت</th>
-                    <th>وضعیت حساب</th>
                     <th>عملیات</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($users as $user)
-
                     <tr role="row" class="">
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
@@ -41,10 +39,18 @@
                         <td>{{ $user->mobile }}</td>
                         <td>{{ $user->getRoleInFarsi() }}</td>
                         <td>{{ $user->getCreatedAtInJalali() }}</td>
-                        <td class="text-success">تاییده شده</td>
                         <td>
-                            <a href="" class="item-delete mlg-15" title="حذف"></a>
+                            @if(auth()->user()->id !== $user->id)
+                                <a href="{{ route('users.destroy', $user->id) }}"
+                                   onclick="destroyUser(event, {{ $user->id }})" class="item-delete mlg-15"
+                                   title="حذف"></a>
+                            @endif
                             <a href="{{ route('users.edit', $user->id) }}" class="item-edit " title="ویرایش"></a>
+                            <form action="{{ route('users.destroy', $user->id) }}" method="post"
+                                  id="destroy-user-{{ $user->id }}">
+                                @csrf
+                                @method('delete')
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -52,4 +58,12 @@
             </table>
         </div>
     </div>
+    <x-slot name="scripts">
+        <script>
+            function destroyUser(event, id) {
+                event.preventDefault();
+                document.getElementById(`destroy-user-${id}`).submit()
+            }
+        </script>
+    </x-slot>
 </x-panel-layout>
