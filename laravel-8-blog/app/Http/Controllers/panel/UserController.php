@@ -25,10 +25,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|string|max:255|unique:users',
-            'role' => 'required|max:255'
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'mobile' => ['required', 'string', 'max:255', 'unique:users'],
+            'role' => ['required', 'max:255']
         ]);
 
         $data = $request->only(['name', 'email', 'mobile', 'role']);
@@ -54,15 +54,15 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'mobile' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'role' => 'required|max:255'
+            'role' => ['required', 'max:255']
         ]);
-        
+
         $user->update(
-                $request->only(['name', 'email', 'mobile', 'role'])
-            );
+            $request->only(['name', 'email', 'mobile', 'role'])
+        );
         return redirect()->route('users.index');
 
     }
