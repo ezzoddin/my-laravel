@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Panel\User\CreateUserRequest;
-use App\Http\Requests\Panel\User\UpdateUserRequest;
+use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Panel\User\CreateUserRequest;
+use App\Http\Requests\Panel\User\UpdateUserRequest;
 
 class UserController extends Controller
 {
     public function index()
     {
         $users = User::paginate();
+
         return view('panel.users.index', compact('users'));
     }
 
@@ -28,17 +30,13 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->route('users.index');
-    }
+        $request->session()->flash('status', 'کاربر به درستی ایجاد شد!');
 
-    public function show($id)
-    {
-        //
+        return redirect()->route('users.index');
     }
 
     public function edit(User $user)
     {
-        // route model binding
         return view('panel.users.edit', compact('user'));
     }
 
@@ -48,12 +46,16 @@ class UserController extends Controller
             $request->validated()
         );
 
+        $request->session()->flash('status', 'اطلاعات کاربر به درستی ویرایش شد!');
+
         return redirect()->route('users.index');
     }
 
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
         $user->delete();
+        $request->session()->flash('status', 'کاربر مد نظر به درستی حذف شد!');
+
         return back();
     }
 }
