@@ -2,11 +2,9 @@
     <x-slot name="title">
         - مدیریت کاربران
     </x-slot>
-
     <x-slot name="styles">
         <link rel="stylesheet" href="{{ asset('blog/css/style.css') }}">
     </x-slot>
-
     <div class="breadcrumb">
         <ul>
             <li><a href="{{ route('dashboard') }}">پیشخوان</a></li>
@@ -45,7 +43,7 @@
                         <td>{{ $user->getRoleInFarsi() }}</td>
                         <td>{{ $user->getCreatedAtInJalali() }}</td>
                         <td>
-                            @if(auth()->user()->id !== $user->id)
+                            @if(auth()->user()->id !== $user->id && $user->role !== 'admin')
                                 <a href="{{ route('users.destroy', $user->id) }}"
                                    onclick="destroyUser(event, {{ $user->id }})" class="item-delete mlg-15"
                                    title="حذف"></a>
@@ -68,7 +66,19 @@
         <script>
             function destroyUser(event, id) {
                 event.preventDefault();
-                document.getElementById(`destroy-user-${id}`).submit()
+                Swal.fire({
+                    title: 'ایا مطمئن هستید این کاربر را میخواهید حذف کنید؟',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: 'rgb(221, 51, 51)',
+                    cancelButtonColor: 'rgb(48, 133, 214)',
+                    confirmButtonText: 'بله حذف کن!',
+                    cancelButtonText: 'کنسل'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`destroy-user-${id}`).submit()
+                    }
+                })
             }
         </script>
     </x-slot>

@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="{{ asset('blog/panel/css/responsive_991.css') }}" media="(max-width:991px)">
     <link rel="stylesheet" href="{{ asset('blog/panel/css/responsive_768.css') }}" media="(max-width:768px)">
     <link rel="stylesheet" href="{{ asset('blog/panel/css/font.css') }}">
-
-
 </head>
 <body>
 <div class="sidebar__nav border-top border-left  ">
@@ -36,18 +34,23 @@
             <a class="header__logo" href="https://webamooz.net"></a>
         </div>
         <div class="header__left d-flex flex-end item-center margin-top-2">
-            <a href="{{ route('logout') }}" class="logout" title="خروج"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"></a>
+            <a href="{{ route('logout') }}" class="logout" title="خروج" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"></a>
             <form action="{{ route('logout') }}" method="post" id="logout-form">
-                @csrf
+              @csrf
             </form>
         </div>
     </div>
     {{ $slot }}
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@if(Session::has('status'))
+<script>
+    Swal.fire({ title: "{{ session('status') }}", confirmButtonText: 'تایید', icon: 'success' })
+</script>
+@endif
+
 <script src="{{ asset('blog/panel/js/jquery-3.4.1.min.js') }}"></script>
 <script src="{{ asset('blog/panel/js/js.js') }}"></script>
-{{ $scripts  ?? ''}}
-
+{{ $scripts ?? '' }}
 </body>
 </html>
