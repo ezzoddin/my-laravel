@@ -15,11 +15,11 @@ Route::get('/post/{id}', function ($id) {
     return view('post');
 })->name('post.show');
 
-Route::get('/profile', function () {
+Route::middleware('auth')->get('/profile', function () {
     return 'profile';
 })->name('profile');
 
-Route::middleware('auth')->resource('/panel/users', UserController::class)->except(['show']);
+Route::middleware(['auth', 'admin'])->resource('/panel/users', UserController::class)->except(['show']);
 
 require __DIR__ . '/auth.php';
 
