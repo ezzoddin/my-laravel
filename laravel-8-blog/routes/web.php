@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::middleware('auth')->get('/profile', function () {
 })->name('profile');
 
 Route::middleware(['auth', 'admin'])->resource('/panel/users', UserController::class)->except(['show']);
+
+Route::middleware(['auth','admin'])->resource('/panel/categories', CategoryController::class)->except(['show', 'create', 'edit']);
 
 require __DIR__ . '/auth.php';
 
