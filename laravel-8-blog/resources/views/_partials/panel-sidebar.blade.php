@@ -10,7 +10,7 @@
             <a href="{{ route('categories.index') }}"> دسته بندی ها</a>
         </li>
     @endif
-    
+
     <li class="item-li i-articles"><a href="articles.html">مقالات</a></li>
     <li class="item-li i-comments"><a href="comments.html"> نظرات</a></li>
     <li class="item-li i-user__inforamtion"><a href="user-information.html">اطلاعات کاربری</a></li>
