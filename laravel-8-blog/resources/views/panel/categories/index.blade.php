@@ -27,46 +27,49 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         @foreach($categories as $category)
                             <tr role="row" class="">
-
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->slug }}</td>
                                 <td>{{ $category->getParentName() }}</td>
                                 <td>
-                                    <a href="" class="item-delete mlg-15" title="حذف"></a>
+                                    <a href="{{ route('categories.destroy', $category->id) }}"
+                                       onclick="destroyCategory(event, {{ $category->id }})" class="item-delete mlg-15"
+                                       title="حذف"></a>
                                     <a href="edit-category.html" class="item-edit " title="ویرایش"></a>
+                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                          id="destroy-category-{{ $category->id }}">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
 
                         </tbody>
                     </table>
-
-                    {{ $categories->links()}}
+                    {{ $categories->links() }}
                 </div>
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد دسته بندی جدید</p>
-                <form action="{{ route('categories.store') }}" method="post" class="padding-30">
+                <form action="{{ route('categories.store') }}" method="POST" class="padding-30">
                     @csrf
-
-                    <input name="name" type="text" placeholder="نام دسته بندی" class="text">
+                    <input type="text" name="name" placeholder="نام دسته بندی" class="text">
                     @error('name')
                     <p class="error">{{ $message }}</p>
                     @enderror
 
-                    <input name="slug" type="text" placeholder="نام انگلیسی دسته بندی" class="text">
+                    <input type="text" name="slug" placeholder="نام انگلیسی دسته بندی" class="text">
                     @error('slug')
                     <p class="error">{{ $message }}</p>
                     @enderror
 
                     <p class="box__title margin-bottom-15">انتخاب دسته پدر</p>
-                    <select name="category_id" class="select" name="" id="">
-                        <option value="">ندارد</option>
 
+                    <select class="select" name="category_id" id="category_id">
+                        <option value="">ندارد</option>
                         @foreach($parentCategories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -80,4 +83,12 @@
             </div>
         </div>
     </div>
+    <x-slot name="scripts">
+        <script>
+            function destroyCategory(event, id) {
+                event.preventDefault();
+                document.getElementById('destroy-category-' + id).submit();
+            }
+        </script>
+    </x-slot>
 </x-panel-layout>
