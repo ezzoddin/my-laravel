@@ -37,6 +37,12 @@ class CategoryController extends Controller
     }
 
 
+    public function edit(Category $category)
+    {
+        return view('panel.categories.edit', compact('category'));
+    }
+
+
     public function update(Request $request, Category $category)
     {
         //
