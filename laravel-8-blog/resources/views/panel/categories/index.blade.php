@@ -37,7 +37,8 @@
                                     <a href="{{ route('categories.destroy', $category->id) }}"
                                        onclick="destroyCategory(event, {{ $category->id }})" class="item-delete mlg-15"
                                        title="حذف"></a>
-                                    <a href="edit-category.html" class="item-edit " title="ویرایش"></a>
+                                    <a href="{{ route('categories.edit', $category->id) }}" class="item-edit "
+                                       title="ویرایش"></a>
                                     <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
                                           id="destroy-category-{{ $category->id }}">
                                         @csrf
