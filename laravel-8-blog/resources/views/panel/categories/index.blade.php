@@ -46,18 +46,21 @@
 
                     <input name="name" type="text" placeholder="نام دسته بندی" class="text">
                     @error('name')
-                        <p class="error">{{ $message }}</p>
+                    <p class="error">{{ $message }}</p>
                     @enderror
 
                     <input name="slug" type="text" placeholder="نام انگلیسی دسته بندی" class="text">
                     @error('slug')
-                        <p class="error">{{ $message }}</p>
+                    <p class="error">{{ $message }}</p>
                     @enderror
 
                     <p class="box__title margin-bottom-15">انتخاب دسته پدر</p>
                     <select name="category_id" class="select" name="" id="">
                         <option value="">ندارد</option>
-                        <option value="0">برنامه نویسی</option>
+
+                        @foreach($parentCategories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
                     </select>
                     @error('category_id')
                     <p class="error">{{ $message }}</p>
