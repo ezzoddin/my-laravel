@@ -41,14 +41,28 @@
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد دسته بندی جدید</p>
-                <form action="" method="post" class="padding-30">
-                    <input type="text" placeholder="نام دسته بندی" class="text">
-                    <input type="text" placeholder="نام انگلیسی دسته بندی" class="text">
+                <form action="{{ route('categories.store') }}" method="post" class="padding-30">
+                    @csrf
+
+                    <input name="name" type="text" placeholder="نام دسته بندی" class="text">
+                    @error('name')
+                        <p class="error">{{ $message }}</p>
+                    @enderror
+
+                    <input name="slug" type="text" placeholder="نام انگلیسی دسته بندی" class="text">
+                    @error('slug')
+                        <p class="error">{{ $message }}</p>
+                    @enderror
+
                     <p class="box__title margin-bottom-15">انتخاب دسته پدر</p>
-                    <select class="select" name="" id="">
-                        <option value="0">ندارد</option>
+                    <select name="category_id" class="select" name="" id="">
+                        <option value="">ندارد</option>
                         <option value="0">برنامه نویسی</option>
                     </select>
+                    @error('category_id')
+                    <p class="error">{{ $message }}</p>
+                    @enderror
+
                     <button class="btn btn-webamooz_net">اضافه کردن</button>
                 </form>
             </div>
