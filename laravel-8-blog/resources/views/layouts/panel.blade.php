@@ -42,7 +42,7 @@
     </div>
     {{ $slot }}
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @if(Session::has('status'))
 <script>
     Swal.fire({ title: "{{ session('status') }}", confirmButtonText: 'تایید', icon: 'success' })
