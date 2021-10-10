@@ -39,13 +39,25 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return view('panel.categories.edit', compact('category'));
+        $parentCategories = Category::where('category_id', null)->get();
+        return view('panel.categories.edit', compact('category', 'parentCategories'));
     }
 
 
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'category_id' => ['nullable', 'exists:categories,id']
+        ]);
+
+        $category::update(
+            $request->only(['name', 'category_id'])
+        );
+
+        session()->flash('status', 'دسته بندی مد نظر به درستی ویرایش شد.');
+
+        return redirect()->route('categories.index');
     }
 
     public function destroy(Category $category)
