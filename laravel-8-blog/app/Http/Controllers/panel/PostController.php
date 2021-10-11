@@ -29,7 +29,7 @@ class PostController extends Controller
         if (count($categoryIds) < 1) {
             throw ValidationException::withMessages([
                 'categories' => ['دسته بندی یافت نشد!']
-            ];
+            ]);
         }
 
         $file = $request->file('banner');
