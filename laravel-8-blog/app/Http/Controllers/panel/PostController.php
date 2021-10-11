@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class PostController extends Controller
 {
@@ -25,6 +26,12 @@ class PostController extends Controller
 
         $categoryIds = Category::whereIn('name', $request->categories)->get()->pluck('id')->toArray();
 
+        if (count($categoryIds) < 1) {
+            throw ValidationException::withMessages([
+                'categories' => ['دسته بندی یافت نشد!']
+            ];
+        }
+
         $file = $request->file('banner');
 
         $file_name = $file->getClientOriginalName();
@@ -35,7 +42,9 @@ class PostController extends Controller
         $data['banner'] = $file_name;
         $data['user_id'] = auth()->user()->id;
 
-        Post::create($data);
+        $post = Post::create($data);
+
+        $post->categories()->sync($categoryIds);
 
         return redirect()->route('posts.index');
     }
