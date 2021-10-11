@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Panel\Category\CategoryCreateRequest;
+use App\Http\Requests\Panel\Category\CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::paginate();
+        $categories = Category::with('parent')->paginate();
         $parentCategories = Category::where('category_id', null)->get();
 
         return view('panel.categories.index', compact('categories', 'parentCategories'));
@@ -40,15 +41,11 @@ class CategoryController extends Controller
     }
 
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'category_id' => ['nullable', 'exists:categories,id']
-        ]);
 
-        $category::update(
-            $request->only(['name', 'category_id'])
+        $category->update(
+            $request->validated()
         );
 
         session()->flash('status', 'دسته بندی مد نظر به درستی ویرایش شد.');
