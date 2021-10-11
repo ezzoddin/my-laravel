@@ -20,6 +20,11 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
+    }
+
     public function getParentName()
     {
         return is_null($this->parent) ? 'ندارد' : $this->parent->name;
