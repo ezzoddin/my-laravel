@@ -10,6 +10,13 @@
             <a href="{{ route('categories.index') }}"> دسته بندی ها</a>
         </li>
     @endif
+    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'author' )
+        <li class="item-li i-articles @if(request()->is('panel/posts') || request()->is('panel/posts/*')) is-active @endif">
+            <a href="{{ route('posts.index') }}"> مقالات</a>
+
+        </li>
+    @endif
+
 
     <li class="item-li i-articles"><a href="articles.html">مقالات</a></li>
     <li class="item-li i-comments"><a href="comments.html"> نظرات</a></li>
