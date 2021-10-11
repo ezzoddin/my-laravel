@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Panel;
 
+use App\Http\Requests\Panel\Post\CreatePostRequest;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -19,14 +20,8 @@ class PostController extends Controller
         return view('panel.posts.create');
     }
 
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'categories' => ['required', 'array'],
-            'categories.*' => ['required', 'string'],
-            'banner' => ['required', 'image']
-        ]);
 
         $categoryIds = Category::whereIn('name', $request->categories)->get()->pluck('id')->toArray();
 
@@ -36,7 +31,13 @@ class PostController extends Controller
 
         $file->storeAs('images/banners', $file_name, 'public_files');
 
-        return back();
+        $data = $request->validated();
+        $data['banner'] = $file_name;
+        $data['user_id'] = auth()->user()->id;
+
+        Post::create($data);
+
+        return redirect()->route('posts.index');
     }
 
     public function edit($post)
