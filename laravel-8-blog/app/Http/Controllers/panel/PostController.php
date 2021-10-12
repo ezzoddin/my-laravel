@@ -13,7 +13,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        return view('panel.posts.index');
+
+        $posts = Post::with('user')->paginate();
+        return view('panel.posts.index', compact('posts'));
     }
 
     public function create()
