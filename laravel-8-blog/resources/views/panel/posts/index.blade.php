@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="table__box">
+        <div class="bg-white table__box">
             <table class="table">
 
                 <thead role="rowgroup">
@@ -61,6 +61,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {{ $posts->links() }}
         </div>
     </div>
 </x-panel-layout>
