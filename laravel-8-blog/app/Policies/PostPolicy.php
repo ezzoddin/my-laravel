@@ -9,10 +9,11 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class PostPolicy
 {
     use HandlesAuthorization;
-    
+
     public function delete(User $user, Post $post)
     {
-        //
+        if ($user->role === 'admin ') return true;
+        return $user->id === $post->user_id;
     }
 
 }
