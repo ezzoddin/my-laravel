@@ -11,7 +11,8 @@ class CommentController extends Controller
 
     public function index()
     {
-        return view('panel.comments.index');
+        $comments = Comment::with(['user', 'post'])->withCount('replies')->paginate();
+        return view('panel.comments.index', compact('comments'));
     }
 
     public function destroy(Comment $comment)
