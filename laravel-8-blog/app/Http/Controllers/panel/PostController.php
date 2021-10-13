@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers\Panel;
 
-use App\Http\Requests\Panel\Post\CreatePostRequest;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Panel\Post\CreatePostRequest;
+use App\Http\Requests\Panel\Post\UpdatePostRequest;
 use Illuminate\Validation\ValidationException;
 
 class PostController extends Controller
 {
     public function index()
     {
-
         if (auth()->user()->role === 'author') {
             $posts = Post::where('user_id', auth()->user()->id)->with('user')->paginate();
+        } else {
+            $posts = Post::with('user')->paginate();
         }
-        $posts = Post::with('user')->paginate();
+
+
         return view('panel.posts.index', compact('posts'));
     }
 
@@ -28,12 +31,11 @@ class PostController extends Controller
 
     public function store(CreatePostRequest $request)
     {
-
         $categoryIds = Category::whereIn('name', $request->categories)->get()->pluck('id')->toArray();
 
         if (count($categoryIds) < 1) {
             throw ValidationException::withMessages([
-                'categories' => ['دسته بندی یافت نشد!']
+                'categories' => ['دسته بندی یافت نشد.']
             ]);
         }
 
@@ -47,7 +49,9 @@ class PostController extends Controller
         $data['banner'] = $file_name;
         $data['user_id'] = auth()->user()->id;
 
-        $post = Post::create($data);
+        $post = Post::create(
+            $data
+        );
 
         $post->categories()->sync($categoryIds);
 
@@ -56,23 +60,48 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function edit($post)
+    public function edit(Post $post)
     {
-        return view('panel.posts.edit');
+        return view('panel.posts.edit', compact('post'));
     }
 
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $categoryIds = Category::whereIn('name', $request->categories)->get()->pluck('id')->toArray();
+
+        if (count($categoryIds) < 1) {
+            throw ValidationException::withMessages([
+                'categories' => ['دسته بندی یافت نشد.']
+            ]);
+        }
+
+        $data = $request->validated();
+
+        if ($request->hasFile('banner')) {
+            $file = $request->file('banner');
+            $file_name = $file->getClientOriginalName();
+            $file->storeAs('images/banners', $file_name, 'public_files');
+
+            $data['banner'] = $file_name;
+        }
+
+        $post->update(
+            $data
+        );
+
+        $post->categories()->sync($categoryIds);
+
+        session()->flash('status', 'مقاله به درستی ویرایش شد.');
+
+        return redirect()->route('posts.index');
     }
 
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-        
         $post->delete();
 
-        session()->flash('status', 'مقاله به درستی حذف شد.');
+        session()->flash('status', 'مقاله به درستی حذف شد');
 
         return back();
     }
