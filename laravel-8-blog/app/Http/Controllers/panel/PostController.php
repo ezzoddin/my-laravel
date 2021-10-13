@@ -68,6 +68,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+        
         $post->delete();
 
         session()->flash('status', 'مقاله به درستی حذف شد.');
