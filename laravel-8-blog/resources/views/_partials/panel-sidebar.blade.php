@@ -19,5 +19,6 @@
             <a href="{{ route('comments.index') }}"> نظرات</a></li>
     @endif
 
-    <li class="item-li i-user__inforamtion"><a href="user-information.html">اطلاعات کاربری</a></li>
+    <li class="item-li i-user__inforamtion @if(request()->is('profile') || request()->is('profile')) is-active @endif">
+        <a href="{{ route('profile') }}">اطلاعات کاربری</a></li>
 </ul>
