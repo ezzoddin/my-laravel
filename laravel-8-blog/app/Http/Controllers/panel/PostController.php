@@ -12,14 +12,25 @@ use Illuminate\Validation\ValidationException;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        if (auth()->user()->role === 'author') {
-            $posts = Post::where('user_id', auth()->user()->id)->with('user')->paginate();
-        } else {
-            $posts = Post::with('user')->paginate();
-        }
 
+        if (auth()->user()->role === 'author') {
+
+            $postsQuery = Post::where('user_id', auth()->user()->id)->with('user');
+            if ($request->search) {
+                $postsQuery->where('title', 'LIKE', "%{$request->search}%");
+            }
+            $posts = $postsQuery->paginate();
+
+        } else {
+
+            $postsQuery = Post::with('user');
+            if ($request->search) {
+                $postsQuery->where('title', 'LIKE', "%{$request->search}%");
+            }
+            $posts = $postsQuery->paginate();
+        }
 
         return view('panel.posts.index', compact('posts'));
     }
