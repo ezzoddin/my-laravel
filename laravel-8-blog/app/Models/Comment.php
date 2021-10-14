@@ -17,6 +17,8 @@ class Comment extends Model
         'post_id'
     ];
 
+    protected $with = ['replies'];
+
 
     public function user()
     {
