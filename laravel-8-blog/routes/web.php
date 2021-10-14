@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\LikePostController;
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\CommentController;
 use App\Http\Controllers\CommentController as StoreCommentController;
@@ -17,7 +18,8 @@ Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/post/{post:slug}', [ShowPostController::class, 'show'])->name('post.show');
-Route::post('/comment', [StoreCommentController::class, 'store'])->name('comment.store');
+Route::middleware(['auth'])->post('/comment', [StoreCommentController::class, 'store'])->name('comment.store');
+Route::middleware(['auth'])->post('/like/{post:slug}', [LikePostController::class, 'store'])->name('like.post');
 
 
 Route::middleware('auth')->get('/profile', [ProfileController::class, 'show'])->name('profile');
