@@ -15,7 +15,7 @@
     <span class="bars d-none padding-0-18"></span>
     <a class="header__logo  d-none" href="https://webamooz.net"></a>
     <div class="profile__info border cursor-pointer text-center">
-        <div class="avatar__img"><img src="{{ asset('blog/panel/img/pro.jpg') }}" class="avatar___img">
+        <div class="avatar__img"><img src="{{ auth()->user()->getProfileUrl() }}" class="avatar___img">
             <input type="file" accept="image/*" class="hidden avatar-img__input">
             <div class="v-dialog__container" style="display: block;"></div>
             <div class="box__camera default__avatar"></div>
@@ -34,9 +34,10 @@
             <a class="header__logo" href="https://webamooz.net"></a>
         </div>
         <div class="header__left d-flex flex-end item-center margin-top-2">
-            <a href="{{ route('logout') }}" class="logout" title="خروج" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"></a>
+            <a href="{{ route('logout') }}" class="logout" title="خروج"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"></a>
             <form action="{{ route('logout') }}" method="post" id="logout-form">
-              @csrf
+                @csrf
             </form>
         </div>
     </div>
@@ -44,9 +45,9 @@
 </div>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @if(Session::has('status'))
-<script>
-    Swal.fire({ title: "{{ session('status') }}", confirmButtonText: 'تایید', icon: 'success' })
-</script>
+    <script>
+        Swal.fire({title: "{{ session('status') }}", confirmButtonText: 'تایید', icon: 'success'})
+    </script>
 @endif
 
 <script src="{{ asset('blog/panel/js/jquery-3.4.1.min.js') }}"></script>
