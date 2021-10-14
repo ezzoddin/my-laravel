@@ -3,6 +3,7 @@
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\CommentController;
+use App\Http\Controllers\CommentController as StoreCommentController;
 use App\Http\Controllers\panel\DashboardController;
 use App\Http\Controllers\Panel\EditorUploadController;
 use App\Http\Controllers\Panel\PostController;
@@ -16,6 +17,8 @@ Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/post/{post:slug}', [ShowPostController::class, 'show'])->name('post.show');
+Route::post('/comment', [StoreCommentController::class, 'store'])->name('comment.store');
+
 
 Route::middleware('auth')->get('/profile', [ProfileController::class, 'show'])->name('profile');
 Route::middleware('auth')->put('/profile', [ProfileController::class, 'update'])->name('profile.update');
