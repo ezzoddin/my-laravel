@@ -22,7 +22,10 @@
                 </div>
                 <div class="single-page__title">
                     <h1 class="single-page__h1">{{ $post->title }}</h1>
-                    <span class="single-page__like"></span>
+                    @auth
+                        <span
+                            class="single-page__like @if($post->is_user_liked) single-page__like--is-active @endif"></span>
+                    @endauth
                 </div>
                 <div class="single-page__details">
                     <div class="single-page__author">نویسنده : {{ $post->user->name }}</div>
@@ -48,15 +51,24 @@
         </div>
         <div class="container">
             <div class="comments" id="comments">
-                <div class="comments__send">
-                    <div class="comments__title">
-                        <h3 class="comments__h3"> دیدگاه خود را بنویسید </h3>
-                        <span class="comments__count">  نظرات ( 160 ) </span>
+                @auth
+                    <div class="comments__send">
+                        <div class="comments__title">
+                            <h3 class="comments__h3"> دیدگاه خود را بنویسید </h3>
+                            <span class="comments__count">  نظرات ( {{ $post->comments_count }} ) </span>
+                        </div>
+                        <form action="{{ route('comment.store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                            <input type="hidden" name="comment_id" value="" id="reply-input">
+                            <textarea class="comments__textarea" name="content" placeholder="بنویسید"></textarea>
+                            <button class="btn btn--blue btn--shadow-blue">ارسال نظر</button>
+                            <button class="btn btn--red btn--shadow-red">انصراف</button>
+                        </form>
                     </div>
-                    <textarea class="comments__textarea" placeholder="بنویسید"></textarea>
-                    <button class="btn btn--blue btn--shadow-blue">ارسال نظر</button>
-                    <button class="btn btn--red btn--shadow-red">انصراف</button>
-                </div>
+                @else
+                    <p>شما برای ارسال نظر باید اول وارد سایت شوید</p>
+                @endauth
                 <div class="comments__list">
                     @foreach($post->comments as $comment)
                         @include('comments.comment', ['comment' => $comment])
@@ -65,4 +77,25 @@
             </div>
         </div>
     </main>
+    <x-slot name="scripts">
+        <script>
+            function setReplyValue(id) {
+                document.getElementById('reply-input').value = id;
+            }
+
+            $(".single-page__like").on("click", function () {
+                fetch('{{ route("like.post", $post->slug) }}', {
+                    method: 'post',
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}'
+                    }
+                }).then((response) => {
+                    if (response.ok) {
+                        $(this).toggleClass("single-page__like--is-active");
+                    }
+                })
+
+            })
+        </script>
+    </x-slot>
 </x-app-layout>
