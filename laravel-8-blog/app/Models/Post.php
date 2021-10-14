@@ -37,6 +37,12 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+
     public function getCreatedAtInJalali()
     {
         return verta($this->created_at)->format('Y/m/d');
@@ -44,7 +50,7 @@ class Post extends Model
 
     public function getBannerUrl()
     {
-        return asset('images/banners/'. $this->banner);
+        return asset('images/banners/' . $this->banner);
     }
 
 }
