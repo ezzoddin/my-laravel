@@ -13,8 +13,8 @@ class Post extends Model
     protected $fillable = [
         'title',
         'slug',
-        'content',
         'banner',
+        'content',
         'user_id'
     ];
 
@@ -51,7 +51,7 @@ class Post extends Model
     {
         return verta($this->created_at)->format('Y/m/d');
     }
-
+    
     public function getBannerUrl()
     {
         return asset('images/banners/' . $this->banner);

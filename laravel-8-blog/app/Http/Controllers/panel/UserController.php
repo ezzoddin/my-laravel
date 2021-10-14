@@ -45,7 +45,7 @@ class UserController extends Controller
         $user->update(
             $request->validated()
         );
-
+        
         $request->session()->flash('status', 'اطلاعات کاربر به درستی ویرایش شد!');
 
         return redirect()->route('users.index');

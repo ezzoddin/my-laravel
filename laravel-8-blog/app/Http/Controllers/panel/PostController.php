@@ -14,23 +14,24 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-
-        if (auth()->user()->role === 'author') {
-
+        if(auth()->user()->role === 'author') {
             $postsQuery = Post::where('user_id', auth()->user()->id)->with('user');
+
             if ($request->search) {
                 $postsQuery->where('title', 'LIKE', "%{$request->search}%");
             }
+
             $posts = $postsQuery->paginate();
-
         } else {
-
             $postsQuery = Post::with('user');
+
             if ($request->search) {
                 $postsQuery->where('title', 'LIKE', "%{$request->search}%");
             }
+
             $posts = $postsQuery->paginate();
         }
+
 
         return view('panel.posts.index', compact('posts'));
     }
@@ -44,7 +45,7 @@ class PostController extends Controller
     {
         $categoryIds = Category::whereIn('name', $request->categories)->get()->pluck('id')->toArray();
 
-        if (count($categoryIds) < 1) {
+        if(count($categoryIds) < 1) {
             throw ValidationException::withMessages([
                 'categories' => ['دسته بندی یافت نشد.']
             ]);
@@ -80,21 +81,22 @@ class PostController extends Controller
     {
         $categoryIds = Category::whereIn('name', $request->categories)->get()->pluck('id')->toArray();
 
-        if (count($categoryIds) < 1) {
+        if(count($categoryIds) < 1) {
             throw ValidationException::withMessages([
                 'categories' => ['دسته بندی یافت نشد.']
             ]);
         }
-
+        
         $data = $request->validated();
 
         if ($request->hasFile('banner')) {
             $file = $request->file('banner');
             $file_name = $file->getClientOriginalName();
             $file->storeAs('images/banners', $file_name, 'public_files');
-
+            
             $data['banner'] = $file_name;
         }
+
 
         $post->update(
             $data

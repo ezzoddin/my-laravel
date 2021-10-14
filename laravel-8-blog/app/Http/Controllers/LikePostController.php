@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class LikePostController extends Controller
 {
@@ -12,6 +12,7 @@ class LikePostController extends Controller
         $post->likes()->toggle(
             auth()->user()->id
         );
+
         return response(['ok'], 200);
     }
 }

@@ -1,11 +1,11 @@
 <x-panel-layout>
-    <x-slot name="title">
-        - مدیریت نظرات
-    </x-slot>
-    <x-slot name="styles">
-        <link rel="stylesheet" href="{{ asset('blog/css/style.css') }}">
-    </x-slot>
-    <div class="breadcrumb">
+<x-slot name="title">
+  - مدیریت نظرات
+</x-slot>
+<x-slot name="styles">
+  <link rel="stylesheet" href="{{ asset('blog/css/style.css') }}">
+</x-slot>
+<div class="breadcrumb">
         <ul>
             <li><a href="{{ route('dashboard') }}">پیشخوان</a></li>
             <li><a href="{{ route('comments.index') }}" class="is-active"> نظرات</a></li>
@@ -36,8 +36,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($comments as $comment)
-                    <tr role="row">
+                  @foreach($comments as $comment)
+                    <tr role="row" >
                         <td>{{ $comment->id }}</td>
                         <td>{{ $comment->user->name }}</td>
                         <td>{{ $comment->post->title }}</td>
@@ -46,25 +46,18 @@
                         <td>{{ $comment->replies_count }}</td>
                         <td class="{{ $comment->is_approved ? 'text-success' : 'text-error' }}">{{ $comment->getStatusInFarsi() }}</td>
                         <td>
-                            <a href="{{ route('comments.destroy', $comment->id) }}" class="item-delete mlg-15"
-                               onclick="destroyComment(event, {{ $comment->id }})" title="حذف"></a>
+                            <a href="{{ route('comments.destroy', $comment->id) }}" class="item-delete mlg-15" onclick="destroyComment(event, {{ $comment->id }})" title="حذف"></a>
                             <a href="show-comment.html" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
                             @if($comment->is_approved)
-                                <a href="{{ route('comments.update', $comment->id) }}"
-                                   onclick="updateComment(event, {{ $comment->id }})" class="item-reject mlg-15"
-                                   title="رد"></a>
+                            <a href="{{ route('comments.update', $comment->id) }}" onclick="updateComment(event, {{ $comment->id }})" class="item-reject mlg-15" title="رد"></a>
                             @else
-                                <a href="{{ route('comments.update', $comment->id) }}"
-                                   onclick="updateComment(event, {{ $comment->id }})" class="item-confirm mlg-15"
-                                   title="تایید"></a>
+                            <a href="{{ route('comments.update', $comment->id) }}" onclick="updateComment(event, {{ $comment->id }})" class="item-confirm mlg-15" title="تایید"></a>
                             @endif
-                            <form action="{{ route('comments.update', $comment->id) }}" method="post"
-                                  id="update-comment-{{ $comment->id }}">
+                            <form action="{{ route('comments.update', $comment->id) }}" method="post" id="update-comment-{{ $comment->id }}">
                                 @csrf
                                 @method('put')
                             </form>
-                            <form action="{{ route('comments.destroy', $comment->id) }}" method="post"
-                                  id="destroy-comment-{{ $comment->id }}">
+                            <form action="{{ route('comments.destroy', $comment->id) }}" method="post" id="destroy-comment-{{ $comment->id }}">
                                 @csrf
                                 @method('delete')
                             </form>
@@ -77,14 +70,13 @@
             {{ $comments->appends(request()->query())->links() }}
         </div>
     </div>
-
+    
     <x-slot name="scripts">
         <script>
             function updateComment(event, id) {
                 event.preventDefault();
                 document.getElementById('update-comment-' + id).submit();
             }
-
             function destroyComment(event, id) {
                 event.preventDefault();
                 document.getElementById('destroy-comment-' + id).submit();

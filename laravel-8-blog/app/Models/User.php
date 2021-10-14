@@ -49,13 +49,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Post::class, 'likes');
     }
 
-
     public function getRoleInFarsi()
     {
         if ($this->role === 'user') return 'کاربر عادی';
         if ($this->role === 'author') return 'نویسنده';
-        if ($this->role === 'admin') return 'ادمین';
-
+        if ($this->role === 'admin') return 'مدیر';
     }
 
     public function getCreatedAtInJalali()
@@ -67,6 +65,5 @@ class User extends Authenticatable
     {
         return asset('images/users/' . $this->profile);
     }
-
-
+    //asset('blog/panel/img/pro.jpg')
 }

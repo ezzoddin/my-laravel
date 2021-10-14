@@ -34,20 +34,19 @@
             <a class="header__logo" href="https://webamooz.net"></a>
         </div>
         <div class="header__left d-flex flex-end item-center margin-top-2">
-            <a href="{{ route('logout') }}" class="logout" title="خروج"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"></a>
+            <a href="{{ route('logout') }}" class="logout" title="خروج" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"></a>
             <form action="{{ route('logout') }}" method="post" id="logout-form">
-                @csrf
+              @csrf
             </form>
         </div>
     </div>
     {{ $slot }}
 </div>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @if(Session::has('status'))
-    <script>
-        Swal.fire({title: "{{ session('status') }}", confirmButtonText: 'تایید', icon: 'success'})
-    </script>
+<script>
+    Swal.fire({ title: "{{ session('status') }}", confirmButtonText: 'تایید', icon: 'success' })
+</script>
 @endif
 
 <script src="{{ asset('blog/panel/js/jquery-3.4.1.min.js') }}"></script>

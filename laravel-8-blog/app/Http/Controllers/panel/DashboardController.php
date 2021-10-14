@@ -21,14 +21,13 @@ class DashboardController extends Controller
         if (auth()->user()->role === 'author') {
 
             $posts_count = Post::where('user_id', auth()->user()->id)->count();
-            
-            $comments_count = Comment::whereHas('post', function ($query) {
+            $comments_count = Comment::whereHas('post', function($query) {
                 return $query->where('user_id', auth()->user()->id);
             })->count();
         }
 
         return view('panel.index', compact(
-            'users_count',
+            'users_count', 
             'posts_count',
             'categories_count',
             'comments_count'

@@ -46,7 +46,7 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
         $inputType = filter_var($this->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
 
-        if (!Auth::attempt([
+        if (! Auth::attempt([
             $inputType => $this->email,
             'password' => $this->password
         ], $this->filled('remember'))) {
@@ -69,7 +69,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited()
     {
-        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -92,6 +92,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey()
     {
-        return Str::lower($this->input('email')) . '|' . $this->ip();
+        return Str::lower($this->input('email')).'|'.$this->ip();
     }
 }

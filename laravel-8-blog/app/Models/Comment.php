@@ -14,11 +14,9 @@ class Comment extends Model
         'is_approved',
         'user_id',
         'comment_id',
-        'post_id'
+        'post_id',
     ];
-
     protected $with = ['approvedReplies'];
-
 
     public function user()
     {
@@ -39,6 +37,7 @@ class Comment extends Model
     {
         return $this->replies()->where('is_approved', true);
     }
+    
 
     public function getCreatedAtInJalali()
     {
@@ -47,8 +46,8 @@ class Comment extends Model
 
     public function getStatusInFarsi()
     {
-        return !!$this->is_approved ?
-            'تایید شده' :
-            'تایید شنده';
+        return !! $this->is_approved 
+        ? 'تایید شده'
+        : 'تایید نشده';
     }
 }

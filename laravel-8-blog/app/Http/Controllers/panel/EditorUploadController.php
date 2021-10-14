@@ -18,7 +18,7 @@ class EditorUploadController extends Controller
         $file->storeAs('images/posts', $file_name, 'public_files');
 
         $function = $request->CKEditorFuncNum;
-        $url = asset('images/posts/' . $file_name);
+        $url = asset('images/posts/'.$file_name);
 
         return response("<script>window.parent.CKEDITOR.tools.callFunction({$function}, '{$url}', 'فایل به درستی اپلود شد')</script>");
     }

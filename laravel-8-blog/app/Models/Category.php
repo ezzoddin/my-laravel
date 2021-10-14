@@ -33,8 +33,5 @@ class Category extends Model
     public function getParentName()
     {
         return is_null($this->parent) ? 'ندارد' : $this->parent->name;
-
     }
-
-
 }

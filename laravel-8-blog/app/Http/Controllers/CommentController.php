@@ -13,7 +13,7 @@ class CommentController extends Controller
         $data['user_id'] = auth()->user()->id;
 
         Comment::create($data);
-
+        
         return back();
     }
 }

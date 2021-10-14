@@ -25,7 +25,7 @@ class ProfileController extends Controller
         }
 
         if ($request->hasFile('profile')) {
-
+            
             $file = $request->file('profile');
             $ext = $file->getClientOriginalExtension();
 

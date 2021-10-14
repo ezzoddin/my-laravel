@@ -13,6 +13,7 @@
     <link rel="canonical" href="https://webamooz.net"/>
     <link rel="stylesheet" href="{{ asset('/blog/css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('/blog/css/style.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('/blog/panel/css/style.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('/blog/css/responsive.css') }}" media="(max-width:991px)">
     <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/css/swiper.min.css">-->
 </head>
@@ -25,8 +26,8 @@
                     <a href="{{ route('landing') }}" class="logo__img"></a>
                 </div>
                 <div class="c-search width-100 ">
-                    <form action="" class="c-search__form position-relative">
-                        <input type="text" class="c-search__input" placeholder="جستجو کنید">
+                    <form action="{{ route('post.search') }}" class="c-search__form position-relative">
+                        <input type="text" name="search" class="c-search__input" placeholder="جستجو کنید" value="{{ request()->search ?? '' }}">
                         <button class="c-search__button"></button>
                     </form>
                 </div>
@@ -40,32 +41,29 @@
                 @guest
                     <div class="c-button__login-regsiter">
                         <div><a class="c-button__link c-button--login" href="{{ route('login') }}">ورود</a></div>
-                        <div><a class="c-button__link c-button--register" href="{{ route('register') }}">ثبت نام</a>
-                        </div>
+                        <div><a class="c-button__link c-button--register" href="{{ route('register') }}">ثبت نام</a></div>
                     </div>
                 @else
-                    <div style="width: 180px;">
-                        <div class="dropdown-select wide" id="dropdown-user" onclick="toggleUserDropdown()"
-                             tabindex="0">
+                <div style="width: 180px;">
+                    <div class="dropdown-select wide" id="dropdown-user" onclick="toggleUserDropdown()" tabindex="0">
                         <span class="current">
                         {{ auth()->user()->name }}
                         </span>
-                            <div class="list">
-                                <ul>
-                                    <li class="option" data-value="0" data-display-text="" tabindex="0">
-                                        <a href="{{ route('profile') }}">پروفایل</a>
-                                    </li>
-                                    <li class="option " data-value="0" data-display-text="" tabindex="0"
-                                        onclick="logoutUser()">
-                                        خروج
-                                    </li>
-                                </ul>
-                                <form action="{{ route('logout') }}" method="POST" id="logout-form">
-                                    @csrf
-                                </form>
-                            </div>
+                        <div class="list">
+                            <ul>
+                                <li class="option" data-value="0" data-display-text="" tabindex="0">
+                                    <a href="{{ route('profile') }}">پروفایل</a>
+                                </li>
+                                <li class="option " data-value="0" data-display-text="" tabindex="0" onclick="logoutUser()">
+                                    خروج
+                                </li>
+                            </ul>
+                            <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                                @csrf
+                            </form>
                         </div>
                     </div>
+                </div>
                 @endguest
             </div>
         </div>
@@ -77,17 +75,17 @@
         </div>
         <div class="container container--nav">
             <ul class="nav__ul">
-                <li class="nav__item"><a href="#" class="nav__link">صفحه اصلی</a></li>
+                <li class="nav__item"><a href="{{ route('landing') }}" class="nav__link">صفحه اصلی</a></li>
                 @foreach($categories as $category)
-                    <li class="nav__item nav__item--has-sub"><a href="#" class="nav__link">{{ $category->name }}</a>
-                        <div class="nav__sub">
-                            <div class="container d-flex item-center flex-wrap container--nav">
-                                @foreach($category->children as $childCategory)
-                                    <a href="" class="nav__link">{{ $childCategory->name }}</a>
-                                @endforeach
-                            </div>
+                <li class="nav__item nav__item--has-sub"><a href="{{ route('category.show', $category->slug) }}" class="nav__link">{{ $category->name }}</a>
+                    <div class="nav__sub">
+                        <div class="container d-flex item-center flex-wrap container--nav">
+                            @foreach($category->children as $childCategory)
+                                <a href="{{ route('category.show', $childCategory->slug) }}" class="nav__link">{{ $childCategory->name }}</a>
+                            @endforeach
                         </div>
-                    </li>
+                    </div>
+                </li>
                 @endforeach
                 <li class="nav__item"><a href="#" class="nav__link">درباره ما</a></li>
                 <li class="nav__item"><a href="#" class="nav__link">تماس باما</a></li>
@@ -170,16 +168,14 @@
 <script src="{{ asset('/blog/js/js.js') }}"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.min.js"></script>-->
 <script>
-    function toggleUserDropdown() {
-        document.getElementById('dropdown-user').classList.toggle('open')
-    }
-
-    function logoutUser() {
-        document.getElementById('logout-form').submit();
-    }
+function toggleUserDropdown() {
+    document.getElementById('dropdown-user').classList.toggle('open')
+}
+function logoutUser() {
+    document.getElementById('logout-form').submit();
+}
 </script>
-
-{{ $script ?? '' }}
+{{ $scripts ?? '' }}
 
 </body>
 </html>

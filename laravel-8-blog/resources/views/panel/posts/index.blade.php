@@ -1,11 +1,11 @@
 <x-panel-layout>
-    <x-slot name="title">
-        - مدیریت مقالات
-    </x-slot>
-    <x-slot name="styles">
-        <link rel="stylesheet" href="{{ asset('blog/css/style.css') }}">
-    </x-slot>
-    <div class="breadcrumb">
+<x-slot name="title">
+  - مدیریت مقالات
+</x-slot>
+<x-slot name="styles">
+  <link rel="stylesheet" href="{{ asset('blog/css/style.css') }}">
+</x-slot>
+<div class="breadcrumb">
         <ul>
             <li><a href="{{ route('dashboard') }}">پیشخوان</a></li>
             <li><a href="{{ route('posts.index') }}" class="is-active"> مقالات</a></li>
@@ -20,11 +20,11 @@
         </div>
         <div class="bg-white padding-20">
             <div class="t-header-search">
-                <form action="{{ route('posts.index') }}" method="get">
+                <form action="{{ route('posts.index') }}">
                     <div class="t-header-searchbox font-size-13">
                         <div type="text" class="text search-input__box font-size-13">جستجوی مقاله
                             <div class="t-header-search-content ">
-                                <input name="search" type="text" class="text" placeholder="نام مقاله">
+                                <input type="text" class="text" name="search" placeholder="نام مقاله">
                                 <button class="btn btn-webamooz_net">جستجو</button>
                             </div>
                         </div>
@@ -53,13 +53,10 @@
                         <td>{{ $post->user->name }}</td>
                         <td>{{ $post->getCreatedAtInJalali() }}</td>
                         <td>
-                            <a href="{{ route('posts.destroy', $post->id) }}"
-                               onclick="destroyPost(event, {{ $post->id }})" class="item-delete mlg-15" title="حذف"></a>
+                            <a href="{{ route('posts.destroy', $post->id) }}" onclick="destroyPost(event, {{ $post->id }})" class="item-delete mlg-15" title="حذف"></a>
                             <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
                             <a href="{{ route('posts.edit', $post->id) }}" class="item-edit" title="ویرایش"></a>
-
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="post"
-                                  id="destroy-post-{{ $post->id }}">
+                            <form action="{{ route('posts.destroy', $post->id) }}" method="post" id="destroy-post-{{ $post->id }}">
                                 @csrf
                                 @method('delete')
                             </form>

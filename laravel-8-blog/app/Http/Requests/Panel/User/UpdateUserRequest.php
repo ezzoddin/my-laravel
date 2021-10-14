@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Panel\User;
 
-use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
