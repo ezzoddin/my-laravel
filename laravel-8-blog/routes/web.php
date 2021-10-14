@@ -8,15 +8,14 @@ use App\Http\Controllers\Panel\EditorUploadController;
 use App\Http\Controllers\Panel\PostController;
 use App\Http\Controllers\panel\ProfileController;
 use App\Http\Controllers\Panel\UserController;
+use App\Http\Controllers\ShowPostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
-Route::get('/post/{id}', function ($id) {
-    return view('post');
-})->name('post.show');
+Route::get('/post/{post:slug}', [ShowPostController::class, 'show'])->name('post.show');
 
 Route::middleware('auth')->get('/profile', [ProfileController::class, 'show'])->name('profile');
 Route::middleware('auth')->put('/profile', [ProfileController::class, 'update'])->name('profile.update');
