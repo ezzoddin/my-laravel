@@ -42,6 +42,10 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes');
+    }
 
     public function getCreatedAtInJalali()
     {
@@ -53,4 +57,8 @@ class Post extends Model
         return asset('images/banners/' . $this->banner);
     }
 
+    public function getIsUserLikedAttribute()
+    {
+        return $this->likes()->where('user_id', auth()->user()->id)->exists();
+    }
 }
