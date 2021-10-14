@@ -21,7 +21,8 @@ class User extends Authenticatable
         'mobile',
         'email',
         'password',
-        'role'
+        'role',
+        'profile'
     ];
 
     /**
@@ -56,4 +57,11 @@ class User extends Authenticatable
     {
         return verta($this->created_at)->format('Y/m/d');
     }
+
+    public function getProfileUrl()
+    {
+        return asset('images/users/' . $this->profile);
+    }
+
+
 }
