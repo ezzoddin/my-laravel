@@ -1,12 +1,12 @@
 @component('mail::message')
-# Introduction
+    # Introduction
 
-The body of your message.
+    Thank you {{ $order->name }}.  We just shipped {{ $order->item_count }} items.
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
+    @component('mail::button', ['url' => ''])
+        Track Order #{{ $order->id }}
+    @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
-@endcomponent
+    Thanks,
+    {{ config('app.name') }}
+@endcomponent 
