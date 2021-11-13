@@ -14,7 +14,8 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name'=> $this->faker->name,
+            'item_count' => $this->faker->randomDigit()
         ];
     }
 }
